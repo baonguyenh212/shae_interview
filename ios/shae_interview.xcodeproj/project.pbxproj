@@ -554,9 +554,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mobile.shae-interview";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mobile.shae;
 				PRODUCT_NAME = shae_interview;
-				PROVISIONING_PROFILE_SPECIFIER = "new-shae-interview-dis";
+				PROVISIONING_PROFILE_SPECIFIER = "shae-dis";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -583,9 +583,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mobile.shae-interview";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mobile.shae;
 				PRODUCT_NAME = shae_interview;
-				PROVISIONING_PROFILE_SPECIFIER = "new-shae-interview-dis";
+				PROVISIONING_PROFILE_SPECIFIER = "shae-dis";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
