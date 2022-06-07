@@ -9,103 +9,76 @@
 import React from 'react';
 import type {Node} from 'react';
 import {
-  SafeAreaView,
+  Alert,
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
-  View,
 } from 'react-native';
 
+import {Header} from './src/common';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+  CaloriesButton,
+  CaloriesWeekComponent,
+} from './src/modules/Calories/component';
+import {responsiveHeight, responsiveWidth} from './src/theme/Metrics';
+import {Colors, Images} from './src/theme';
+import {CaloriesChart} from './src/modules/Calories';
+import {getLessons, getMessageTypes} from './src/utilities/APIManage';
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const fetchMessageTypes = () => {
+    getMessageTypes().then(res => {
+      Alert.alert('Fetching API success', `URL: ${res?.url}`);
+    });
+  };
+
+  const fetchLessons = () => {
+    getLessons().then(res => {
+      Alert.alert('Fetching API success', `URL: ${res?.intro}`);
+    });
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Header title={'Calories Burned'} />
       <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
+        style={styles.container}
+        contentContainerStyle={styles.content}>
+        <CaloriesWeekComponent />
+        <CaloriesChart />
+        <CaloriesButton
+          icon={Images.calories.inActive}
+          text={'In-Active Calories Burned'}
+          value={'1793'}
+          unit={'BPM'}
+          onPress={fetchMessageTypes}
+        />
+        <CaloriesButton
+          containerStyle={{
+            marginTop: responsiveHeight(16),
+          }}
+          icon={Images.calories.workout}
+          text={'Workout Calories Burned'}
+          value={'587'}
+          onPress={fetchLessons}
+        />
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    backgroundColor: Colors.white,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  content: {
+    paddingHorizontal: responsiveWidth(20),
+    paddingVertical: responsiveHeight(24),
   },
 });
 
