@@ -12,6 +12,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1644DB96285083B0005CBDA5 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1644DB95285083B0005CBDA5 /* HealthKit.framework */; };
 		7699B88040F8A987B510C191 /* libPods-shae_interview-shae_interviewTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-shae_interview-shae_interviewTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		924852C9A89D4643B91F4783 /* SFProText-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 54D3C56F22924A2F984BB8B5 /* SFProText-Semibold.otf */; };
@@ -42,6 +43,8 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = shae_interview/main.m; sourceTree = "<group>"; };
 		1422579AD45747CFAD78E2C3 /* SFProDisplay-Medium.OTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProDisplay-Medium.OTF"; path = "../src/assets/fonts/SFProDisplay-Medium.OTF"; sourceTree = "<group>"; };
 		153994ED6120417D821A64FC /* SFProText-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProText-Medium.otf"; path = "../src/assets/fonts/SFProText-Medium.otf"; sourceTree = "<group>"; };
+		1644DB94285083B0005CBDA5 /* shae_interview.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = shae_interview.entitlements; path = shae_interview/shae_interview.entitlements; sourceTree = "<group>"; };
+		1644DB95285083B0005CBDA5 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-shae_interview-shae_interviewTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-shae_interview-shae_interviewTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25CA40C7499341DEBB572032 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SourceSansPro-Regular.ttf"; path = "../src/assets/fonts/SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		2AE3F5037A914875A864DD28 /* SourceSansPro-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SourceSansPro-SemiBoldItalic.ttf"; path = "../src/assets/fonts/SourceSansPro-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-shae_interview.a in Frameworks */,
+				1644DB96285083B0005CBDA5 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +114,7 @@
 		13B07FAE1A68108700A75B9A /* shae_interview */ = {
 			isa = PBXGroup;
 			children = (
+				1644DB94285083B0005CBDA5 /* shae_interview.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -123,6 +128,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1644DB95285083B0005CBDA5 /* HealthKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-shae_interview.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-shae_interview-shae_interviewTests.a */,
@@ -539,6 +545,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = shae_interview/shae_interview.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -569,6 +576,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = shae_interview/shae_interview.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
