@@ -11,4 +11,5 @@ export const Images = {
     workout: require('../assets/images/calories/workout_ic.png'),
   },
   popupContainer: require('../assets/images/info_popup_container.png'),
+  connectHealthkit: require('../assets/images/connect_healthkit.png'),
 };

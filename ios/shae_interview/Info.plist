@@ -39,6 +39,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+  <key>NSHealthShareUsageDescription</key>
+  <string>Read and understand health data.</string>
+  <key>NSHealthUpdateUsageDescription</key>
+  <string>Read and understand workout data.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SourceSansPro-Black.ttf</string>

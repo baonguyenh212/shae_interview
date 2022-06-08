@@ -1,65 +1,69 @@
 /**
  * Created by NL on 07/06/2022.
  */
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {
+  createContainer,
   VictoryAxis,
   VictoryBar,
   VictoryChart,
   VictoryLine,
   VictoryStack,
+  VictoryTooltip,
 } from 'victory-native';
 import {deviceWidth} from '../../theme/Metrics';
-import {Colors, Images} from '../../theme';
+import {Colors} from '../../theme';
 import {LinesChart} from './constants';
 import {Text} from '../../common';
-import FastImage from 'react-native-fast-image';
+import moment from 'moment';
 
-export const CaloriesChart = props => {
-  const data2012 = [
-    {quarter: 1, earnings: 1793},
-    {quarter: 2, earnings: 1900},
-    {quarter: 3, earnings: 2000},
-    {quarter: 4, earnings: 2100},
-    {quarter: 5, earnings: 2200},
-    {quarter: 6, earnings: 2300},
-    {quarter: 7, earnings: 2400},
-  ];
-
-  const data2013 = [
-    {quarter: 1, earnings: 587},
-    {quarter: 2, earnings: 587},
-    {quarter: 3, earnings: 587},
-    {quarter: 4, earnings: 587},
-    {quarter: 5, earnings: 587},
-    {quarter: 6, earnings: 587},
-    {quarter: 7, earnings: 587},
-  ];
-
+export const CaloriesChart = ({
+  activeBurned,
+  workouts,
+  handleChangeScrollAble,
+}) => {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const yAxis = [0, 1000, 2000, 3000, 4000];
 
-  const renderInfo = () => {
-    return (
-      <View style={styles.infoContainer}>
-        <View>
-          <Text textStyle={styles.blackText}>2,380</Text>
-          <View style={styles.unitContainer}>
-            <Text textStyle={styles.grayText}>Kcal Burned</Text>
-            <View style={styles.circle} />
-            <Text textStyle={styles.grayText}>08 Dec</Text>
+  const [isShowTooltip, setShowTooltip] = useState(false);
+  const [touchLocationX, setTouchLocationX] = useState(0);
+
+  const RenderInfo = e => {
+    const {x, y, datum} = e;
+    console.log('%c CaloriesChart1', 'color:#4AF82F', x, datum?.weekDay);
+    if (datum?.weekDay) {
+      const workoutCal =
+        workouts.find(w => w.weekDay === datum.weekDay)?.value || 0;
+      const activeBurnedCal =
+        activeBurned.find(a => a.weekDay === datum.weekDay)?.value || 0;
+
+      return (
+        <View style={[styles.infoContainer, {left: x - 11}]}>
+          <View>
+            <Text textStyle={styles.blackText}>
+              {workoutCal + activeBurnedCal}
+            </Text>
+            <View style={styles.unitContainer}>
+              <Text textStyle={styles.grayText}>Kcal Burned</Text>
+              <View style={styles.circle} />
+              <Text textStyle={styles.grayText}>
+                {moment(datum?.end || datum?.endDate).format('DD MMM')}
+              </Text>
+            </View>
           </View>
+          {/*<View style={styles.triangle} />*/}
         </View>
-        <View style={styles.triangle} />
-      </View>
-    );
+      );
+    }
+    return null;
   };
+
+  const VictoryVoronoiContainer = createContainer('voronoi');
 
   return (
     <View style={styles.container}>
       <View>
-        {renderInfo()}
         <VictoryChart
           padding={{left: 28, right: 50, top: 20, bottom: 50}}
           width={deviceWidth()}>
@@ -84,35 +88,49 @@ export const CaloriesChart = props => {
               },
             }}
           />
-          <VictoryLine
-            style={{
-              data: {stroke: Colors.chartLine},
-            }}
-            data={[
-              {x: 1, y: 1000},
-              {x: 1, y: 2000},
-              {x: 1, y: 3000},
-              {x: 1, y: 4000},
-              {x: 1, y: 4200},
-            ]}
-          />
-          {LinesChart.map(line => (
+          {/*<VictoryLine*/}
+          {/*  style={{*/}
+          {/*    data: {stroke: Colors.chartLine},*/}
+          {/*  }}*/}
+          {/*  data={[*/}
+          {/*    {x: 1, y: 1000},*/}
+          {/*    {x: 1, y: 2000},*/}
+          {/*    {x: 1, y: 3000},*/}
+          {/*    {x: 1, y: 4000},*/}
+          {/*    {x: 1, y: 4200},*/}
+          {/*  ]}*/}
+          {/*/>*/}
+          {LinesChart.map((line, index) => (
             <VictoryLine
+              key={index}
               style={{
                 data: {stroke: Colors.chartLine},
               }}
               data={line}
             />
           ))}
-
           <VictoryStack>
             <VictoryBar
+              // labels={() => ' '}
+              // labelComponent={
+              //   <VictoryTooltip
+              //     // center={{x: 225, y: 30}}
+              //     // pointerOrientation="bottom"
+              //     // flyoutWidth={150}
+              //     // flyoutHeight={50}
+              //     // pointerWidth={30}
+              //     // cornerRadius={0}
+              //     renderInPortal={false}
+              //     flyoutComponent={<RenderInfo />}
+              //   />
+              // }
+              barRatio={0.3}
               style={{
                 data: {fill: Colors.orange},
               }}
-              data={data2012}
-              x="quarter"
-              y="earnings"
+              data={activeBurned}
+              x="weekDay"
+              y="value"
               cornerRadius={{
                 bottomLeft: 8,
                 bottomRight: 8,
@@ -121,12 +139,41 @@ export const CaloriesChart = props => {
               }}
             />
             <VictoryBar
+              // events={[
+              //   {
+              //     target: 'data',
+              //     eventHandlers: {
+              //       onFocus: () => ({
+              //         target: 'labels',
+              //         mutation: () => ({active: true}),
+              //       }),
+              //       onBlur: () => ({
+              //         target: 'labels',
+              //         mutation: () => ({active: true}),
+              //       }),
+              //     },
+              //   },
+              // ]}
+              // labels={() => ' '}
+              // labelComponent={
+              //   <VictoryTooltip
+              //     // center={{x: 225, y: 30}}
+              //     // pointerOrientation="bottom"
+              //     // flyoutWidth={150}
+              //     // flyoutHeight={50}
+              //     // pointerWidth={30}
+              //     // cornerRadius={0}
+              //     renderInPortal={false}
+              //     flyoutComponent={<RenderInfo />}
+              //   />
+              // }
+              barRatio={0.3}
               style={{
                 data: {fill: Colors.blue},
               }}
-              data={data2013}
-              x="quarter"
-              y="earnings"
+              data={workouts}
+              x="weekDay"
+              y="value"
               cornerRadius={{
                 bottomLeft: 3,
                 bottomRight: 3,
@@ -180,6 +227,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowOffset: {width: 0, height: 3},
     paddingVertical: 15,
+    position: 'absolute',
   },
   triangle: {
     width: 0,
