@@ -13,30 +13,25 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  TouchableOpacity,
   useColorScheme,
 } from 'react-native';
 
-import {Header, Text} from './src/common';
+import {Header} from './src/common';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {
-  CaloriesButton,
-  CaloriesWeekComponent,
-} from './src/modules/Calories/component';
-import {isIOS, responsiveHeight, responsiveWidth} from './src/theme/Metrics';
-import {Colors, Images} from './src/theme';
+import {CaloriesWeekComponent} from './src/modules/Calories/component';
+import {isIOS} from './src/theme/Metrics';
+import {Colors} from './src/theme';
 import {CaloriesChart} from './src/modules/Calories';
 import {getLessons, getMessageTypes} from './src/utilities/APIManage';
 import {initHealthKit} from './src/services/healthkit';
 import AppleHealthKit, {HealthValue} from 'react-native-health';
-import moment from 'moment';
 import {formatHealthKitData} from './src/modules/Calories/helper';
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [workouts, setWorkouts] = useState([{weekDay: 0, value: 0}]);
   const [activeBurned, setActiveBurned] = useState([{weekDay: 0, value: 0}]);
-  const [isScrollAble, setScrollAble] = useState(false);
+  const [isScrollAble, setScrollAble] = useState(true);
 
   useEffect(() => {
     handleConnectHealthKit();
@@ -74,7 +69,7 @@ const App: () => Node = () => {
             }
           });
         });
-      }, 500);
+      }, 2000);
     }
   };
 
@@ -107,22 +102,8 @@ const App: () => Node = () => {
           handleChangeScrollAble={handleChangeScrollAble}
           activeBurned={activeBurned}
           workouts={workouts}
-        />
-        <CaloriesButton
-          icon={Images.calories.inActive}
-          text={'In-Active Calories Burned'}
-          value={'1793'}
-          unit={'BPM'}
-          onPress={fetchMessageTypes}
-        />
-        <CaloriesButton
-          containerStyle={{
-            marginTop: responsiveHeight(16),
-          }}
-          icon={Images.calories.workout}
-          text={'Workout Calories Burned'}
-          value={'587'}
-          onPress={fetchLessons}
+          fetchMessageTypes={fetchMessageTypes}
+          fetchLessons={fetchLessons}
         />
       </ScrollView>
     </SafeAreaProvider>
@@ -134,8 +115,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   content: {
-    paddingHorizontal: responsiveWidth(20),
-    paddingVertical: responsiveHeight(24),
+    paddingHorizontal: 20,
+    paddingVertical: 25,
   },
 });
 
