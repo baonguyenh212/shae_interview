@@ -141,7 +141,7 @@ export const CaloriesChart = ({
       <View style={styles.content}>
         <VictoryChart
           padding={{left: 28, right: 60, top: 20, bottom: 50}}
-          width={deviceWidth
+          width={deviceWidth()}
           events={[
             {
               childName: ['bar-1', 'bar-2'],
